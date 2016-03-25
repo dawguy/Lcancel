@@ -1,5 +1,6 @@
 <?php
 
+use WelcomeController;
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -11,15 +12,7 @@
 |
 */
 
-$helloWorld = function($genre) {
-    return "Hello world {$genre}";
-};
-
-Route::get('/', function () {
-    return View::make('simple');
-});
-
-Route::get('/{genre}', $helloWorld);
+Route::get('/', 'WelcomeController@index');
 
 
 /*
