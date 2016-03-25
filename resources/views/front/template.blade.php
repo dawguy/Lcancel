@@ -8,9 +8,9 @@
 
 <body>
     <h1>The Template Is Working!</h1>
-    <main role="main" class="container">
+    <div class="container">
         @yield('main')
-    </main>
+    </div>
 </body>
 
 </html>
