@@ -1,6 +1,5 @@
 <?php
 
-use WelcomeController;
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -12,8 +11,7 @@ use WelcomeController;
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-
+Route::get('/', 'WelcomeController@Index');
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +24,8 @@ Route::get('/', 'WelcomeController@index');
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/', 'HomeController@index');
 });
