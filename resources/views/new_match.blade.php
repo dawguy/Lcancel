@@ -9,18 +9,40 @@
 	background: #9494b8;
 }
 
+.player:hover{
+	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
+}
+
 .selected {
 	background: #8585e0;
 }
 
 .playerLeft {
-	width: 50%;
+	margin: auto;
+}
+
+.playerMiddle {
 	margin: auto;
 }
 
 .playerRight {
-	width: 50%;
 	margin: auto;
+}
+
+.player1Stock:hover{
+	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
+}
+
+.player2Stock:hover{
+	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
+}
+
+.player1Character:hover{
+	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
+}
+
+.player2Character:hover{
+	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
 }
 
 </style>
@@ -94,20 +116,56 @@
 	    		<div class="row">
 	    			<h3>Bloodisblue #1</h3>
 				</div>
+				<div class="row">
+					Character:
+					<img class="player1Character" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Selected Character" height="40" width="40">
+				</div>
+				<div class="row">
+					Stocks:
+					<img class="player1Stock" src="{{URL::asset('/image/none.png')}}" alt="No Lives" height="40" width="40">
+					<img class="player1Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
+					<img class="player1Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
+					<img class="player1Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
+					<img class="player1Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
+				</div>
 			</div>
     	</div>
     	<div class="col-lg-2">
-    	   	<div class="row">
+    	   	<div class="row playerMiddle">
     	   		<h3>vs</h3>
 			</div>
     	</div>
     	<div class="col-lg-5">
     		<div class="playerRight">
-	    	    <div class="row">
-	    			<h3>Jjllama #1</h3>
+	    		<div class="row">
+	    			<h3>Jjllama #311</h3>
+				</div>
+				<div class="row">
+					Character:
+					<img class="player2Character" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Selected Character" height="40" width="40">
+				</div>
+				<div class="row">
+					Stocks:
+					<img class="player2Stock" src="{{URL::asset('/image/none.png')}}" alt="No Lives" height="40" width="40">
+					<img class="player2Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
+					<img class="player2Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
+					<img class="player2Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
+					<img class="player2Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
 				</div>
 			</div>
     	</div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-5">
+        </div>
+        <div class="col-lg-2">
+            <div class="row playerMiddle">
+                <input id="submitMatch" type="submit" value="Submit">
+            </div>
+        </div>
+        <div class="col-lg-5">
+        </div>
     </div>
 </div>
 @endsection
