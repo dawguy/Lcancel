@@ -54,18 +54,11 @@
 				<h2>Friend</h2>
 			</div>
 			<div class="">
+				@foreach($friends as $friend)
 				<div class="player">
-					JJllama #10
+					{{$friend}}
 				</div>
-				<div class="player selected">
-					Bloodisblue #1
-				</div>
-				<div class="player">
-					Bloodisblue #11
-				</div>
-				<div class="player">
-					Bloodisblue #13
-				</div>
+				@endforeach
 			</div>
 		</div>
 		<div class="col-sm-4">
@@ -73,24 +66,11 @@
 				<h2>Recent</h2>
 			</div>
 			<div class="">
+				@foreach($recents as $recent)
 				<div class="player">
-					JJllama #12
+					{{$recent}}
 				</div>
-				<div class="player">
-					Bloodisblue #11
-				</div>
-				<div class="player">
-					Bloodisblue #14
-				</div>
-				<div class="player">
-					Bloodisblue #15
-				</div>
-				<div class="player">
-					Bloodisblue #17
-				</div>
-				<div class="player">
-					Bloodisblue #18
-				</div>
+				@endforeach
 			</div>
 		</div>
    		<div class="col-sm-4">
@@ -98,12 +78,11 @@
 				<h2>Search</h2>
 			</div>
 			<div class="">
+				@foreach($searches as $searched)
 				<div class="player">
-					JJllama #12
+					{{$searched}}
 				</div>
-				<div class="player">
-					Bloodisblue #11
-				</div>
+				@endforeach
 			</div>
 		</div>
     </div>
@@ -114,7 +93,7 @@
     	<div class="col-lg-5">
     		<div class="playerLeft">
 	    		<div class="row">
-	    			<h3>Bloodisblue #1</h3>
+	    			<h3>{{ $user }}</h3>
 				</div>
 				<div class="row">
 					Character:
@@ -123,10 +102,10 @@
 				<div class="row">
 					Stocks:
 					<img class="player1Stock" src="{{URL::asset('/image/none.png')}}" alt="No Lives" height="40" width="40">
-					<img class="player1Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
-					<img class="player1Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
-					<img class="player1Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
-					<img class="player1Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
+					<img class="player1Stock" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
+					<img class="player1Stock" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
+					<img class="player1Stock" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
+					<img class="player1Stock" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
 				</div>
 			</div>
     	</div>
@@ -138,19 +117,19 @@
     	<div class="col-lg-5">
     		<div class="playerRight">
 	    		<div class="row">
-	    			<h3>Jjllama #311</h3>
+	    			<h3 id="opponent">Select Opponent</h3>
 				</div>
 				<div class="row">
 					Character:
-					<img class="player2Character" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Selected Character" height="40" width="40">
+					<img class="player2Character" src="{{URL::asset('/image/stocks/question.png')}}" alt="Selected Character" height="40" width="40">
 				</div>
 				<div class="row">
 					Stocks:
 					<img class="player2Stock" src="{{URL::asset('/image/none.png')}}" alt="No Lives" height="40" width="40">
-					<img class="player2Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
-					<img class="player2Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
-					<img class="player2Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
-					<img class="player2Stock" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Stock" height="40" width="40">
+					<img class="player2Stock" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
+					<img class="player2Stock" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
+					<img class="player2Stock" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
+					<img class="player2Stock" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
 				</div>
 			</div>
     	</div>
