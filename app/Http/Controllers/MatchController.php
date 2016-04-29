@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Auth;
+use App\User;
 
 class MatchController extends Controller
 {
@@ -25,31 +26,33 @@ class MatchController extends Controller
     public function index()
     {
         $data = array();
+        $searches = array();
+        $friends = array();
+        $recents = array();
 
         $user = Auth::user()->name;
 
-        $friends = array();
-        $friends[] = 'Friend';
-        $friends[] = 'Friend 1';
-        $friends[] = 'Friend 2';
+        $searchable_users = User::searchable()->get();
+        foreach($searchable_users as $user){
+            $searches[] = ['name' => $user->name, 'id' => $user->id];
+        }
 
-        $recents = array();
-        $recents[] = 'Recent';
-        $recents[] = 'Recent 1';
+        $friendly_users = User::friendsWith()->get();
+        foreach($friendly_users as $user){
+            $friends[] = ['name' => $user->name, 'id' => $user->id];
+        }
 
-        $searches = array();
-        $searches[] = 'Search';
-        $searches[] = 'Search 1';
-        $searches[] = 'Search 2';
-        $searches[] = 'Search 3';
-        $searches[] = 'Search 4';
+        $recently_played_with_users = User::recentlyPlayedWith()->get();
+        foreach($recently_played_with_users as $user){
+            $recents[] = ['name' => $user->name, 'id' => $user->id];
+        }
 
         $main_character = 'Peach';
 
         $data['friends']= $friends;
         $data['recents']= $recents;
         $data['searches']= $searches;
-        $data['user'] = $user;
+        $data['user'] = $user->name;
         $data['main_character'] = $main_character;
 
         return view('new_match', $data);

@@ -55,8 +55,8 @@
 			</div>
 			<div class="">
 				@foreach($friends as $friend)
-				<div class="player">
-					{{$friend}}
+				<div data-playerid="{{ $friend['id'] }}" class="player">
+					{{ $friend['name'] }}
 				</div>
 				@endforeach
 			</div>
@@ -67,8 +67,8 @@
 			</div>
 			<div class="">
 				@foreach($recents as $recent)
-				<div class="player">
-					{{$recent}}
+				<div data-playerid="{{ $recent['id'] }}" class="player">
+					{{ $recent['name'] }}
 				</div>
 				@endforeach
 			</div>
@@ -79,8 +79,8 @@
 			</div>
 			<div class="">
 				@foreach($searches as $searched)
-				<div class="player">
-					{{$searched}}
+				<div data-playerid="{{ $searched['id'] }}" class="player">
+					{{ $searched['name'] }}
 				</div>
 				@endforeach
 			</div>
