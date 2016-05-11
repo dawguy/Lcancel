@@ -1,8 +1,8 @@
-<?php
-
-namespace App;
+<?php namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Passwords\CanResetPassword;
 
 class User extends Authenticatable
 {
@@ -12,9 +12,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','wins','losses','elo',
+        'id', 'name', 'email', 'password',
     ];
-
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -23,16 +22,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function scopeSearchable($query){
-        return $query;
-    }
-
-    public function scopeFriendsWith($query){
-        return $query->where('name', '=', 'dawguy');
-    }
-
-    public function scopeRecentlyPlayedWith($query){
-        return $query->where('name', '=', 'jjllama');
-    }
 }

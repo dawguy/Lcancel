@@ -2,63 +2,62 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Repositories\UserRepository;
+
+use App\Models\User;
+
+use Log;
 
 class AuthController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
+    protected $user;
+    protected $username = 'name'; //VERY VERY Important. Used to tell auth what to attribute to use as the username.
+    protected $auth;
 
     /**
      * Create a new authentication controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Guard $auth, User $user)
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->user = $user;
+        $this->auth = $auth;
+        $this->middleware('guest', ['except' => 'getLogout']);
     }
 
-    /**
+   /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
+     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+          'name' => 'required|max:255|unique:users',
+          'email' => 'required|email|max:255|unique:users',
+          'password' => 'required|confirmed|min:6',
         ]);
     }
+
 
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
+     *
      * @return User
      */
     protected function create(array $data)
@@ -69,4 +68,62 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  App\Http\Requests\RegisterRequest  $request
+     * @param  App\Repositories\UserRepository $user_gestion
+     * @return Response
+     */
+    public function postRegister(
+        RegisterRequest $request,
+        UserRepository $user_gestion)
+    {
+        $user = $user_gestion->store(
+            $request->all(), 
+            $confirmation_code = str_random(30)
+        );
+
+        return redirect('/')->with('ok', trans('front/verify.message'));
+    }
+
+    /**
+     * Handle a confirmation request.
+     *
+     * @param  App\Repositories\UserRepository $user_gestion
+     * @param  string  $confirmation_code
+     * @return Response
+     */
+    public function getConfirm(
+        UserRepository $user_gestion,
+        $confirmation_code)
+    {
+        Log::info('D getConfirm');
+        $user = $user_gestion->confirm($confirmation_code);
+
+        return redirect('/')->with('ok', trans('front/verify.success'));
+    }
+
+    /**
+     * Handle a resend request.
+     *
+     * @param  App\Repositories\UserRepository $user_gestion
+     * @param  Illuminate\Http\Request $request
+     * @return Response
+     */
+    public function getResend(
+        UserRepository $user_gestion,
+        Request $request)
+    {
+        if($request->session()->has('user_id')) {
+            $user = $user_gestion->getById($request->session()->get('user_id'));
+
+            return redirect('/')->with('ok', trans('front/verify.resend'));
+        }
+
+        return redirect('/');        
+    }
+    
 }

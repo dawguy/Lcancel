@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Auth;
-use App\User;
+use App\Models\User;
 
 class MatchController extends Controller
 {
