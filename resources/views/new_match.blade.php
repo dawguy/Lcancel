@@ -4,7 +4,7 @@
 <style>
 .player {
 	border-style: solid;
-	border-width: 3px;
+	border-width: 2px;
 	margin: 2px;
 	background: #9494b8;
 }
@@ -29,7 +29,17 @@
 	margin: auto;
 }
 
-.player1Stock:hover{
+.player1Stock{
+	background: lightgray;
+	border-radius: 6px;
+}
+
+.player2Stock{
+	background: lightgray;
+	border-radius: 6px;
+}
+
+.p1s4:hover .p1s4{
 	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
 }
 
@@ -46,6 +56,10 @@
 }
 
 </style>
+@push('scripts')
+	<script type="text/javascript" src="{{URL::asset('js/NewMatch.js')}}"></script>
+@endpush
+
 <div class="container">
     <div class="row">
     	<h1>Select Player</h1>
@@ -55,9 +69,7 @@
 			</div>
 			<div class="">
 				@foreach($friends as $friend)
-				<div data-playerid="{{ $friend['id'] }}" class="player">
-					{{ $friend['name'] }}
-				</div>
+				<div data-playerid="{{ $friend['id'] }}" class="player">{{ $friend['name'] }}</div>
 				@endforeach
 			</div>
 		</div>
@@ -67,9 +79,7 @@
 			</div>
 			<div class="">
 				@foreach($recents as $recent)
-				<div data-playerid="{{ $recent['id'] }}" class="player">
-					{{ $recent['name'] }}
-				</div>
+				<div data-playerid="{{ $recent['id'] }}" class="player">{{ $recent['name'] }}</div>
 				@endforeach
 			</div>
 		</div>
@@ -78,10 +88,9 @@
 				<h2>Search</h2>
 			</div>
 			<div class="">
+				<input type="text"/>
 				@foreach($searches as $searched)
-				<div data-playerid="{{ $searched['id'] }}" class="player">
-					{{ $searched['name'] }}
-				</div>
+				<div data-playerid="{{ $searched['id'] }}" class="player">{{ $searched['name'] }}</div>
 				@endforeach
 			</div>
 		</div>
@@ -97,15 +106,16 @@
 				</div>
 				<div class="row">
 					Character:
-					<img class="player1Character" src="{{URL::asset('/image/stocks/peach.png')}}" alt="Selected Character" height="40" width="40">
+					<img id="player1Character" class="player1Character" data-character="{{$main_character}}"src="{{URL::asset('/image/stocks/question.png')}}" alt="Selected Character" height="40" width="40">
+					@include('character_select', array('playerNumber' => 1))
 				</div>
 				<div class="row">
 					Stocks:
-					<img class="player1Stock" src="{{URL::asset('/image/none.png')}}" alt="No Lives" height="40" width="40">
-					<img class="player1Stock" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
-					<img class="player1Stock" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
-					<img class="player1Stock" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
-					<img class="player1Stock" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
+					<img id="player1_0Lives" style="p1s0 opacity: .1" class="player1StockNone" src="{{URL::asset('/image/none.png')}}" alt="No Lives" height="40" width="40">
+					<img id="player1_1Lives" class="player1Stock p1s1 p1s2 p1s3 p1s4" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
+					<img id="player1_2Lives" class="player1Stock p1s2 p1s3 p1s4" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
+					<img id="player1_3Lives" class="player1Stock p1s3 p1s4" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
+					<img id="player1_4Lives" class="player1Stock p1s4" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
 				</div>
 			</div>
     	</div>
@@ -121,15 +131,16 @@
 				</div>
 				<div class="row">
 					Character:
-					<img class="player2Character" src="{{URL::asset('/image/stocks/question.png')}}" alt="Selected Character" height="40" width="40">
+					<img id="player2Character" class="player2Character" src="{{URL::asset('/image/stocks/question.png')}}" alt="Selected Character" height="40" width="40">
+					@include('character_select', array('playerNumber' => 2))
 				</div>
 				<div class="row">
 					Stocks:
-					<img class="player2Stock" src="{{URL::asset('/image/none.png')}}" alt="No Lives" height="40" width="40">
-					<img class="player2Stock" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
-					<img class="player2Stock" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
-					<img class="player2Stock" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
-					<img class="player2Stock" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
+					<img id="player2_0Lives" style="opacity: .1" class="player2StockNone" src="{{URL::asset('/image/none.png')}}" alt="No Lives" height="40" width="40">
+					<img id="player2_1Lives" class="player2Stock p2s1 p2s2 p2s3 p2s4" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
+					<img id="player2_2Lives" class="player2Stock p2s2 p2s3 p2s4" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
+					<img id="player2_3Lives" class="player2Stock p2s3 p2s4" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
+					<img id="player2_4Lives" class="player2Stock p2s4" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
 				</div>
 			</div>
     	</div>

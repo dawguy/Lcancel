@@ -8,7 +8,11 @@
                 <div class="panel-heading">Dashboard</div>
                 
                 <div class="panel-body">
-                    Am I logged in?         
+                    <ul>
+                        <li>
+                            <a href="/match">Matches</a>
+                        </li>
+                    </ul>         
                 </div>
             </div>
         </div>

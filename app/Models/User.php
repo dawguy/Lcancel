@@ -22,4 +22,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function scopeSearchable($query){
+        return $query;
+    }
+
+    public function scopeFriendsWith($query){
+        return $query->where('name', '=', 'dawguy');
+    }
+
+    public function scopeRecentlyPlayedWith($query){
+        return $query->where('name', '=', 'jjllama');
+    }
 }

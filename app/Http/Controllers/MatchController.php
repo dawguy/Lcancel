@@ -53,6 +53,7 @@ class MatchController extends Controller
         $data['recents']= $recents;
         $data['searches']= $searches;
         $data['user'] = $user->name;
+        $data['player1Character'] = 1;
         $data['main_character'] = $main_character;
 
         return view('new_match', $data);

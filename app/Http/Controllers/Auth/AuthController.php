@@ -14,6 +14,8 @@ use App\Repositories\UserRepository;
 
 use App\Models\User;
 
+use Validator;
+
 use Log;
 
 class AuthController extends Controller
@@ -67,63 +69,6 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
-    }
-
-
-    /**
-     * Handle a registration request for the application.
-     *
-     * @param  App\Http\Requests\RegisterRequest  $request
-     * @param  App\Repositories\UserRepository $user_gestion
-     * @return Response
-     */
-    public function postRegister(
-        RegisterRequest $request,
-        UserRepository $user_gestion)
-    {
-        $user = $user_gestion->store(
-            $request->all(), 
-            $confirmation_code = str_random(30)
-        );
-
-        return redirect('/')->with('ok', trans('front/verify.message'));
-    }
-
-    /**
-     * Handle a confirmation request.
-     *
-     * @param  App\Repositories\UserRepository $user_gestion
-     * @param  string  $confirmation_code
-     * @return Response
-     */
-    public function getConfirm(
-        UserRepository $user_gestion,
-        $confirmation_code)
-    {
-        Log::info('D getConfirm');
-        $user = $user_gestion->confirm($confirmation_code);
-
-        return redirect('/')->with('ok', trans('front/verify.success'));
-    }
-
-    /**
-     * Handle a resend request.
-     *
-     * @param  App\Repositories\UserRepository $user_gestion
-     * @param  Illuminate\Http\Request $request
-     * @return Response
-     */
-    public function getResend(
-        UserRepository $user_gestion,
-        Request $request)
-    {
-        if($request->session()->has('user_id')) {
-            $user = $user_gestion->getById($request->session()->get('user_id'));
-
-            return redirect('/')->with('ok', trans('front/verify.resend'));
-        }
-
-        return redirect('/');        
     }
     
 }
