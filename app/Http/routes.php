@@ -13,6 +13,7 @@
 
 Route::get('/', 'WelcomeController@Index');
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -44,5 +45,5 @@ Route::group(['middleware' => ['web']], function () {
 
 	// Match Routes
     Route::get('match', 'MatchController@index');
-	Route::put('newMatch', 'MatchController@putMatch');
+	Route::put('match', 'MatchController@putMatch');
 });

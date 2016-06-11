@@ -11,14 +11,4 @@ class Characters extends Model  {
 	 */
 	protected $table = 'characters';
 
-	/**
-	 * One to Many relation
-	 *
-	 * @return Illuminate\Database\Eloquent\Relations\hasMany
-	 */
-	public function playerMatches() 
-	{
-	  return $this->hasMany('App\Models\User');
-	}
-
 }

@@ -1,11 +1,16 @@
 var selectedPlayer;
 var playerDiv;
 
+var player1Id = 1;
+var player2Id = 2;
+
 var player1Lives = 4;
 var player2Lives = 4;
 
 var player1Character;
 var player2Character;
+
+var stage = 'Battlefield';
 
 var fullOpacity    = 1;
 var partialOpacity = .1;
@@ -37,7 +42,45 @@ function setupClickHandlers(){
 			name : playerName,
 			id : playerId
 		};
+
+		player2Id = playerId;
 		playerDiv = this;
+	});
+
+	$('#submitMatch').on('click', function(e){
+		var player1 = {
+			'character' : player1Character,
+			'stocks'    : player1Lives,
+			'playerId'  : player1Id
+		};
+
+		var player2 = {
+			'character' : player2Character,
+			'stocks'    : player2Lives,
+			'playerId'  : player2Id
+		};
+
+		var url = '/match';
+		var token = $('#token').val();
+
+		var map = {
+			'_token'  : token,
+			'player1' : player1,
+			'player2' : player2,
+			'stage'   : stage
+		};
+
+		$.ajax({
+			url : url,
+			type : 'PUT',
+			data : map
+		})
+		.fail(function(d){
+			console.log('Match create failed!');
+		})
+		.done(function(d){
+			console.log('Put Success! New match');
+		});
 	});
 
 	$('.player1Character').on('click', function(d){
@@ -68,7 +111,7 @@ function setupClickHandlers(){
 		$(playerCharacterSelectId).toggle();
 	});
 
-// Player 1
+	// Player 1
 	$('#player1_0Lives').on('click', function(){
 		player1Lives = 0;
 		$('#player1_0Lives').css('opacity', fullOpacity);
@@ -114,7 +157,7 @@ function setupClickHandlers(){
 		$('#player1_4Lives').css('opacity', fullOpacity);
 	});
 
-// Player 2
+	// Player 2
 	$('#player2_0Lives').on('click', function(){
 		player2Lives = 0;
 		$('#player2_0Lives').css('opacity', fullOpacity);
@@ -184,8 +227,6 @@ function setupClickHandlers(){
 
 	$('#player2_1Lives').mouseenter( function(){ addShadow('.p2s1'); });
 	$('#player2_1Lives').mouseleave( function(){ removeShadow('.p2s1'); });
-
-
 }
 
 function addShadow(e){

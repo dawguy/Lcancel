@@ -157,5 +157,6 @@
         <div class="col-lg-5">
         </div>
     </div>
+    <input type="hidden" id="token" value="{{ csrf_token() }}">
 </div>
 @endsection

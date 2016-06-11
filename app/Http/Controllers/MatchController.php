@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Matches;
 use Auth;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Log;
 
 class MatchController extends Controller
 {
@@ -23,8 +26,7 @@ class MatchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         $data = array();
         $searches = array();
         $friends = array();
@@ -59,4 +61,22 @@ class MatchController extends Controller
         return view('new_match', $data);
     }
 
+    public function putMatch(Request $request){
+        $player1 = $request->get('player1');
+        $player2 = $request->get('player2');
+        $stage = $request->get('stage');
+
+        $match = new Matches;
+        $match->winner = $player1['playerId'];
+        $match->loser = $player2['playerId'];
+        $match->winner_character = $player1['character'];
+        $match->loser_character = $player2['character'];
+        $match->winner_stocks = $player1['stocks'];
+        $match->loser_stocks = $player2['stocks'];
+        $match->stage = $stage;
+
+#        Log::info( print_r( $match, true ));
+        $match->save();
+
+    }
 }

@@ -9,16 +9,6 @@ class Matches extends Model  {
 	 *
 	 * @var string
 	 */
-	protected $table = 'characters';
-
-	/**
-	 * One to Many relation
-	 *
-	 * @return Illuminate\Database\Eloquent\Relations\hasMany
-	 */
-	public function playerMatches() 
-	{
-	  return $this->hasMany('App\Models\User');
-	}
+	protected $table = 'matches';
 
 }
