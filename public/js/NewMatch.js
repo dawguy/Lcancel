@@ -18,6 +18,8 @@ var partialOpacity = .1;
 $(document).ready(function(){
 	setupClickHandlers();
     setupSearchHandlers();
+    player1Character = $('.player1Character').data('character');
+    player1Id = $('#player1Id').data('user');
 });
 
 function submit(){
@@ -52,6 +54,33 @@ function select_player_two(playerName, playerId){
 
 		player2Id = playerId;
 		playerDiv = this;
+
+		var url = 'users/mainCharacter/' + player2Id;
+		$.get(url)
+		.done( function(data, text_status){
+			player2Character = data.name;
+			$('#player2_character_' + data.id).trigger('click');
+		});
+}
+
+function characterClicked(){
+	var playerNumber    = $(this).data('playernumber');
+	var characterChoice = $(this).data('character');
+	var imgPath         = $(this).attr('src');
+
+	var playerCharacterSelectId = '#player' + playerNumber + 'CharacterSelect';
+	var playerCharacterId       = '#player' + playerNumber + 'Character';
+	var playerStockClass        = '.player' + playerNumber + 'Stock';
+
+	if(playerNumber == 1){
+		player1Character = characterChoice;
+	} else {
+		player2Character = characterChoice;
+	}
+
+	$(playerCharacterId).attr('src', imgPath);
+	$(playerStockClass).attr('src', imgPath);
+	$(playerCharacterSelectId).hide();
 }
 
 function setupClickHandlers(){
@@ -107,26 +136,10 @@ function setupClickHandlers(){
 		$('#player2CharacterSelect').toggle();
 	});
 
-	$('.characterSelect').on('click', function(){
-		var playerNumber    = $(this).data('playernumber');
-		var characterChoice = $(this).data('character');
-		var imgPath         = $(this).attr('src');
-
-		var playerCharacterSelectId = '#player' + playerNumber + 'CharacterSelect';
-		var playerCharacterId       = '#player' + playerNumber + 'Character';
-		var playerStockClass        = '.player' + playerNumber + 'Stock';
-
-		if(playerNumber == 1){
-			player1Character = characterChoice;
-		} else {
-			player2Character = characterChoice;
-		}
-
-		$(playerCharacterId).attr('src', imgPath);
-		$(playerStockClass).attr('src', imgPath);
-		$(playerCharacterSelectId).toggle();
-	});
-
+	for(var i = 1; i <= 27; i++){
+		$('#player1_character_' + i).on('click', characterClicked);
+		$('#player2_character_' + i).on('click', characterClicked);
+	}
 	// Player 1
 	$('#player1_0Lives').on('click', function(){
 		player1Lives = 0;

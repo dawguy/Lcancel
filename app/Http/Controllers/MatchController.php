@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UserController;
 use App\Models\Matches;
 use Auth;
 use App\Models\User;
@@ -32,7 +33,7 @@ class MatchController extends Controller
         $friends = array();
         $recents = array();
 
-        $user = Auth::user()->name;
+        $currentUser = Auth::user();
 
         $searchable_users = User::searchable('');
         foreach($searchable_users as $user){
@@ -50,14 +51,15 @@ class MatchController extends Controller
             $recents[] = ['name' => $user->name, 'id' => $user->id];
         }
 
-        $main_character = 'Peach';
+        $main_character = UserController::mainCharacter($currentUser->id);
 
         $data['friends']= $friends;
         $data['recents']= $recents;
         $data['searches']= $searches;
-        $data['user'] = $user->name;
-        $data['player1Character'] = 1;
-        $data['main_character'] = $main_character;
+        $data['user'] = $currentUser->name;
+        $data['userId'] = $currentUser->id;
+        $data['player1Character'] = $main_character['id'];
+        $data['main_character'] = $main_character['name'];
 
         return view('new_match', $data);
     }
@@ -66,16 +68,27 @@ class MatchController extends Controller
         $player1 = $request->get('player1');
         $player2 = $request->get('player2');
         $stage = $request->get('stage');
+        $winner = null;
+        $loser = null;
 
         $player1['playerId'] = Auth::user()->id;
 
+        if($player1['stocks'] >= $player2['stocks']){
+            $winner = $player1;
+            $loser = $player2;
+        }
+        else{
+            $loser = $player1;
+            $winner = $player2;
+        }
+
         $match = new Matches;
-        $match->winner = $player1['playerId'];
-        $match->loser = $player2['playerId'];
-        $match->winner_character = $player1['character'];
-        $match->loser_character = $player2['character'];
-        $match->winner_stocks = $player1['stocks'];
-        $match->loser_stocks = $player2['stocks'];
+        $match->winner = $winner['playerId'];
+        $match->loser = $loser['playerId'];
+        $match->winner_character = $winner['character'];
+        $match->loser_character = $loser['character'];
+        $match->winner_stocks = $winner['stocks'];
+        $match->loser_stocks = $loser['stocks'];
         $match->stage = $stage;
 
 #        Log::info( print_r( $match, true ));

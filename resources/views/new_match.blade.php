@@ -112,11 +112,11 @@ ul.ui-autocomplete {
     	<div class="col-lg-5">
     		<div class="playerLeft">
 	    		<div class="row">
-	    			<h3>{{ $user }}</h3>
+	    			<h3 id="player1Id" data-user="{{$userId}}">{{ Auth::user()->name }}</h3>
 				</div>
 				<div class="row">
 					Character:
-					<img id="player1Character" class="player1Character" data-character="{{$main_character}}"src="{{URL::asset('/image/stocks/question.png')}}" alt="Selected Character" height="40" width="40">
+					<img id="player1Character" class="player1Character" data-character="{{$player1Character}}"src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Selected Character" height="40" width="40">
 					@include('character_select', array('playerNumber' => 1))
 				</div>
 				<div class="row">
