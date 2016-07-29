@@ -1,8 +1,8 @@
 var selectedPlayer;
 var playerDiv;
 
-var player1Id = 1;
-var player2Id = 2;
+var player1Id;
+var player2Id;
 
 var player1Lives = 4;
 var player2Lives = 4;
@@ -17,24 +17,31 @@ var partialOpacity = .1;
 
 $(document).ready(function(){
 	setupClickHandlers();
+    setupSearchHandlers();
 });
 
 function submit(){
 	
 }
 
-function setupClickHandlers(){
-	$('.player').on('click', function(d){
-		var player = $(this).data();
-		var playerName = this.innerHTML;
-		var playerId = player.playerid;
-		
+function setupSearchHandlers(){
+    $('#player_search').autocomplete({
+    	source : 'users/search',
+    	select : function(event, ui){
+    		$('#player_search').val(ui.item.value);
+    		var playerName = ui.item.value
+    		var playerId = ui.item.id;
+
+    		select_player_two(playerName,playerId);
+    	},
+    	appendTo : '#player_search_container'
+    });
+}
+
+function select_player_two(playerName, playerId){
 		if(typeof playerDiv !== 'undefined'){
 			$(playerDiv).css('background', '#9494b8');
 		}
-
-		$(this).css('background', '#3399ff');
-
 
 		$('#opponent').text(playerName);
 
@@ -45,6 +52,15 @@ function setupClickHandlers(){
 
 		player2Id = playerId;
 		playerDiv = this;
+}
+
+function setupClickHandlers(){
+	$('.player').on('click', function(d){
+		var player = $(this).data();
+		var playerName = this.innerHTML;
+		var playerId = player.playerid;
+		
+		select_player_two(playerName,playerId);
 	});
 
 	$('#submitMatch').on('click', function(e){

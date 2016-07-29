@@ -34,17 +34,18 @@ class MatchController extends Controller
 
         $user = Auth::user()->name;
 
-        $searchable_users = User::searchable()->get();
+        $searchable_users = User::searchable('');
         foreach($searchable_users as $user){
             $searches[] = ['name' => $user->name, 'id' => $user->id];
         }
 
-        $friendly_users = User::friendsWith()->get();
+        $friendly_users = User::friendsWith();
+
         foreach($friendly_users as $user){
             $friends[] = ['name' => $user->name, 'id' => $user->id];
         }
 
-        $recently_played_with_users = User::recentlyPlayedWith()->get();
+        $recently_played_with_users = User::recentlyPlayedWith();
         foreach($recently_played_with_users as $user){
             $recents[] = ['name' => $user->name, 'id' => $user->id];
         }
@@ -65,6 +66,8 @@ class MatchController extends Controller
         $player1 = $request->get('player1');
         $player2 = $request->get('player2');
         $stage = $request->get('stage');
+
+        $player1['playerId'] = Auth::user()->id;
 
         $match = new Matches;
         $match->winner = $player1['playerId'];

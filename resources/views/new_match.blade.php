@@ -2,7 +2,7 @@
 
 @section('content')
 <style>
-.player {
+.player, .ui-menu-item {
 	border-style: solid;
 	border-width: 2px;
 	margin: 2px;
@@ -55,6 +55,16 @@
 	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
 }
 
+.ui-helper-hidden-accessible {
+	display:none;
+}
+
+ul.ui-autocomplete {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
 </style>
 @push('scripts')
 	<script type="text/javascript" src="{{URL::asset('js/NewMatch.js')}}"></script>
@@ -87,8 +97,8 @@
 			<div class="">
 				<h2>Search</h2>
 			</div>
-			<div class="">
-				<input type="text"/>
+			<div id="player_search_container" class="">
+				<input id="player_search" type="text"/>
 				@foreach($searches as $searched)
 				<div data-playerid="{{ $searched['id'] }}" class="player">{{ $searched['name'] }}</div>
 				@endforeach

@@ -46,4 +46,7 @@ Route::group(['middleware' => ['web']], function () {
 	// Match Routes
     Route::get('match', 'MatchController@index');
 	Route::put('match', 'MatchController@putMatch');
+
+	// User Routes
+	Route::get('users/search', 'UserController@autocomplete');
 });
