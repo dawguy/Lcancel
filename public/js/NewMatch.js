@@ -124,7 +124,9 @@ function setupClickHandlers(){
 			console.log('Match create failed!');
 		})
 		.done(function(d){
-			console.log('Put Success! New match');
+			alert('Match added!');
+			$('#player1_4Lives').trigger('click');
+			$('#player2_4Lives').trigger('click');
 		});
 	});
 

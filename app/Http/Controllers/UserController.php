@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Models\User;
+use Auth;
 use Log;
 use DB;
 use Illuminate\Support\Facades\Input;
@@ -34,7 +35,9 @@ class UserController extends Controller
 
         foreach($users as $user)
         {
-            $results[] = ['id' => $user['id'], 'value' => $user['name']];
+            if(Auth::user()->id !== $user['id']){
+                $results[] = ['id' => $user['id'], 'value' => $user['name']];
+            }
         }
         return $results;
     }

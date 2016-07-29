@@ -34,14 +34,14 @@ class User extends Authenticatable
     }
 
     public function scopeFriendsWith($query){
-        $playerOne = DB::table('users')
-                            ->join('player_friends', 'users.id', '=', 'player_friends.player_one')
+        $playerOne = DB::table('player_friends')
                             ->select('player_friends.player_two')
+                            ->where('player_friends.player_one', '=', Auth::user()->id)
                             ->get();
 
-        $playerTwo = DB::table('users')
-                            ->join('player_friends', 'users.id', '=', 'player_friends.player_two')
+        $playerTwo = DB::table('player_friends')
                             ->select('player_friends.player_one')
+                            ->where('player_friends.player_two', '=', Auth::user()->id)
                             ->get();
 
         $playerIds = array();
@@ -56,6 +56,7 @@ class User extends Authenticatable
 
         $friends = DB::table('users')
                     ->whereIn('id', $playerIds)
+                    ->where('id', '<>', Auth::user()->id)
                     ->get();
 
         return $friends;
@@ -84,6 +85,7 @@ class User extends Authenticatable
 
         $friends = DB::table('users')
                     ->whereIn('id', $playerIds)
+                    ->where('id', '<>', Auth::user()->id)
                     ->get();
 
         return $friends;
