@@ -56,6 +56,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('users/mainCharacter/{playerId}', 'UserController@mainCharacter');
 
 	// Friends Routes
+    Route::get('friends', 'FriendController@index');
 	Route::put('friends/add/{playerId}', 'FriendController@addFriend');
     Route::delete('friends/remove/{playerId}', 'FriendController@removeFriend');
 

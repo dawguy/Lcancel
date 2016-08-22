@@ -13,6 +13,33 @@ use Log;
 class FriendController extends Controller
 {
     /**
+    * Create a new controller instance.
+    *
+    * @return void
+    */
+   public function __construct()
+   {
+       $this->middleware('auth');
+   }
+
+    /**
+    * List of the players friends
+    */
+    public function index(){
+        $data = array();
+
+        $currentUser = Auth::user()->id;
+        $playerFriends = PlayerFriends::where('player_one', '=', $currentUser)
+        ->join('users', 'player_friends.player_two', '=', 'users.id')
+        ->get();
+        $data['friends'] = $playerFriends;
+
+        Log::info($playerFriends);
+
+        return view('friends', $data);
+    }
+
+    /**
     * Adds a friend to the current user
     */
     public function addFriend(Request $request){
