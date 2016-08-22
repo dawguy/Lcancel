@@ -4,54 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\UserController;
-use App\Models\Matches;
-use Auth;
+use App\Models\PlayerFriends;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 use Log;
 
-class MatchController extends Controller
+class FriendController extends Controller
+{
+    /**
+    * Adds a friend to the current user
+    */
+    public function addFriend(Request $request){
+        $playerId = $request['playerId'];
+        $currentUser = Auth::user()->id;
+
+        $areFriends = count(PlayerFriends::areFriends($currentUser, $playerId)) > 0;
+
+        if($areFriends){
+            return;
+        }
+
+        $new_player_friend = new PlayerFriends();
+        $new_player_friend->player_one = $currentUser;
+        $new_player_friend->player_two = $playerId;
+        $new_player_friend->save();
+    }
 
     /**
-     * Show the friend dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(){
-        $data = array();
-        $searches = array();
-        $friends = array();
-        $recents = array();
+    * Removes a friend from the current user
+    */
+    public function removeFriend(Request $request){
+        $playerId = $request['playerId'];
+        $currentUser = Auth::user()->id;
 
-        $currentUser = Auth::user();
+        $playerFriends = PlayerFriends::areFriends($currentUser, $playerId);
 
-        $searchable_users = User::searchable('');
-        foreach($searchable_users as $user){
-            $searches[] = ['name' => $user->name, 'id' => $user->id];
+        foreach($playerFriends as $friend){
+            PlayerFriends::where('id', '=', $friend['id'])->delete();
         }
-
-        $friendly_users = User::friendsWith();
-
-        foreach($friendly_users as $user){
-            $friends[] = ['name' => $user->name, 'id' => $user->id];
-        }
-
-        $recently_played_with_users = User::recentlyPlayedWith();
-        foreach($recently_played_with_users as $user){
-            $recents[] = ['name' => $user->name, 'id' => $user->id];
-        }
-
-        $main_character = UserController::mainCharacter($currentUser->id);
-
-        $data['friends']= $friends;
-        $data['recents']= $recents;
-        $data['searches']= $searches;
-        $data['user'] = $currentUser->name;
-        $data['userId'] = $currentUser->id;
-        $data['player1Character'] = $main_character['id'];
-        $data['main_character'] = $main_character['name'];
-
-        return view('friends', $data);
     }
 }
 ?>

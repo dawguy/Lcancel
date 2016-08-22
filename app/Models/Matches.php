@@ -15,7 +15,7 @@ class Matches extends Model  {
 	/**
     * Gets a list of matches that a user was part of.
     *
-    * @return array(winner matches, loser matches)
+    * @return array(matches)
     */
     public function scopeUserMatches($query, $playerId)
     {
@@ -40,5 +40,33 @@ class Matches extends Model  {
 
         return $matches;
     }
+
+	/**
+    * Gets a list of matches that a user won
+    *
+    * @return array(won matches)
+    */
+    public function scopeUserWonMatches($query, $playerId)
+    {
+    	// Get loser name too
+        $wonMatches = Matches::where('winner', '=', $playerId)
+        ->get();
+
+        return $wonMatches;
+    }
+
+	/**
+	* Gets a list of matches that a user lost
+	*
+	* @return array(lost matches)
+	*/
+	public function scopeUserLostMatches($query, $playerId)
+	{
+		// Get loser name too
+		$lostMatches = Matches::where('loser', '=', $playerId)
+		->get();
+
+		return $lostMatches;
+	}
 
 }

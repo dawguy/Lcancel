@@ -45,7 +45,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	// Match Routes
     Route::get('match', 'MatchController@index');
-	  Route::put('match', 'MatchController@putMatch');
+	Route::put('match', 'MatchController@putMatch');
 
 	// History Routes
     Route::get('history', 'HistoryController@userIndex');
@@ -56,5 +56,10 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('users/mainCharacter/{playerId}', 'UserController@mainCharacter');
 
 	// Friends Routes
-	Route::get('friends', 'FriendController@index');
+	Route::put('friends/add/{playerId}', 'FriendController@addFriend');
+    Route::delete('friends/remove/{playerId}', 'FriendController@removeFriend');
+
+    // Profile Routes
+    Route::get('profile', 'ProfileController@userIndex');
+    Route::get('profile/{playerId}', 'ProfileController@index');
 });

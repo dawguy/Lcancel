@@ -94,7 +94,6 @@ class MatchController extends Controller
         $match->loser_stocks = $loser['stocks'];
         $match->stage = $stage;
 
-#        Log::info( print_r( $match, true ));
         $match->save();
 
     }

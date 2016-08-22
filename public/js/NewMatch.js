@@ -23,7 +23,7 @@ $(document).ready(function(){
 });
 
 function submit(){
-	
+
 }
 
 function setupSearchHandlers(){
@@ -88,7 +88,7 @@ function setupClickHandlers(){
 		var player = $(this).data();
 		var playerName = this.innerHTML;
 		var playerId = player.playerid;
-		
+
 		select_player_two(playerName,playerId);
 	});
 
