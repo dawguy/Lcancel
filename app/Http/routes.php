@@ -45,9 +45,16 @@ Route::group(['middleware' => ['web']], function () {
 
 	// Match Routes
     Route::get('match', 'MatchController@index');
-	Route::put('match', 'MatchController@putMatch');
+	  Route::put('match', 'MatchController@putMatch');
+
+	// History Routes
+    Route::get('history', 'HistoryController@userIndex');
+	Route::get('history/{playerId}', 'HistoryController@index');
 
 	// User Routes
 	Route::get('users/search', 'UserController@autocomplete');
 	Route::get('users/mainCharacter/{playerId}', 'UserController@mainCharacter');
+
+	// Friends Routes
+	Route::get('friends', 'FriendController@index');
 });
