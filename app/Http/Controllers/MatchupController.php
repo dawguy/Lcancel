@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\MatchController;
 use App\Models\Matches;
 use App\Models\Characters;
 use Auth;
@@ -12,7 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Log;
 
-class HistoryController extends Controller
+class MatchupController extends Controller
 {
 	 /**
      * Create a new controller instance.
@@ -29,7 +27,8 @@ class HistoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($playerId){
+    public function index(){
+		$playerId = Auth::user()->id;
         $data = array();
         $player = User::find($playerId);
         $data['player'] = $player;
@@ -45,15 +44,6 @@ class HistoryController extends Controller
         }
         $data['characters'] = $charactersIdToName;
 
-        return view('history', $data);
+        return view('matchup', $data);
     }
-
-	/**
-	* Show the history tab for a player with no data
-	*
-	*/
-	public function userIndex(){
-		$playerId = Auth::user()->id;
-		return $this->index($playerId);
-	}
 }

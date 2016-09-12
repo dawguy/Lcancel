@@ -63,4 +63,7 @@ Route::group(['middleware' => ['web']], function () {
     // Profile Routes
     Route::get('profile', 'ProfileController@userIndex');
     Route::get('profile/{playerId}', 'ProfileController@index');
+
+    // Visualization Routes
+    Route::get('matchup', 'MatchupController@index');
 });
