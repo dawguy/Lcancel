@@ -9,6 +9,7 @@ use Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Log;
+use DB;
 
 class MatchupController extends Controller
 {
@@ -23,7 +24,7 @@ class MatchupController extends Controller
     }
 
     /**
-     * Show the history tab.
+     * Show the matchup tab.
      *
      * @return \Illuminate\Http\Response
      */
@@ -46,4 +47,64 @@ class MatchupController extends Controller
 
         return view('matchup', $data);
     }
+
+	/**
+	* Gets matchup json for playerOne vs playerTwo
+	* @return json
+	*/
+	public function playerRecordVsPlayer($playerOne, $playerTwo){
+		$characters = Characters::all();
+        $charactersIdToName = array();
+        foreach($characters as $character){
+            $charactersIdToName[$character['id']] = $character['name'];
+        }
+
+		$wonMatches = Matches::where('winner', '=', $playerOne)
+							->where('loser', '=',  $playerTwo)
+							->groupBy('loser_character')
+							->select('loser_character', DB::raw('count(*) as total'))
+							->get();
+
+		$lostMatches = Matches::where('loser', '=',  $playerOne)
+									->where('winner', '=',  $playerTwo)
+									->groupBy('winner_character')
+									->select('winner_character', DB::raw('count(*) as total'))
+									->get();
+
+		$matchJson = array();
+
+		foreach($wonMatches as $match){
+			$characterName = $charactersIdToName[$match['loser_character']];
+
+			if(!isset($matchJson[$characterName])){
+				$matchJson[$characterName] = array();
+				$matchJson[$characterName]['key'] = $characterName;
+				$matchJson[$characterName]['value'] = $match['total'];
+				$matchJson[$characterName]['wins'] = $match['total'];
+				$matchJson[$characterName]['losses'] = 0;
+			} else {
+				$matchJson[$characterName]['value'] += $match['total'];
+				$matchJson[$characterName]['wins'] += $match['total'];
+			}
+		}
+
+		foreach($lostMatches as $match){
+			$characterName = $charactersIdToName[$match['winner_character']];
+
+			if(!isset($matchJson[$characterName])){
+				$matchJson[$characterName] = array();
+				$matchJson[$characterName]['key'] = $characterName;
+				$matchJson[$characterName]['value'] = $match['total'];
+				$matchJson[$characterName]['wins'] = 0;
+				$matchJson[$characterName]['losses'] = $match['total'];
+			} else {
+				$matchJson[$characterName]['value'] += $match['total'];
+				$matchJson[$characterName]['losses'] += $match['total'];
+			}
+		}
+
+		return response()
+			->json(array_values($matchJson));
+	}
+
 }

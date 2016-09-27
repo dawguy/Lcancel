@@ -7,6 +7,7 @@ var matchupsBarData = [];
 function init(){
     console.log(matches);
     console.log(characters);
+    console.log(currentPlayer);
 
     for(var i = 0; i < matches.length; i++){
         var match = matches[i]
