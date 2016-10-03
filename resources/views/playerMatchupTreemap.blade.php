@@ -11,6 +11,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    var playerMatchupJson = {!! json_encode($playerMatchupJson) !!};
+    var playerOne = {!! json_encode($playerOne) !!};
+	var playerTwo = {!! json_encode($playerTwo) !!};
 </script>
 @endsection

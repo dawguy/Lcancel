@@ -54,8 +54,8 @@ class MatchupController extends Controller
 	* @return \Illuminate\Http\Response
 	*/
 	public function playerRecordTreemap($playerOne, $playerTwo){
-		$json = $this->playerRecordVsPlayer($playerOne, $playerTwo);
-		$data['playerMatchupJson'] = json_decode($json->getContent());
+		$data['playerOne'] = $playerOne;
+		$data['playerTwo'] = $playerTwo;
 		return view('playerMatchupTreemap', $data);
 	}
 
