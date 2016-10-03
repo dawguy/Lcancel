@@ -21,9 +21,9 @@ function init(){
     var width = 800 - margin.left - margin.right;
     var height = 800 - margin.top - margin.bottom;
 
-    var color = d3.scaleOrdinal()
-    .range(d3.schemeCategory10
-    .map(function(c) { c = d3.rgb(c); c.opacity = 0.6; return c; }));
+    var color = d3.scaleLinear()
+        .domain([0,1])
+        .range(['red','green']);
 
     var svg = d3.select(".graph").append("svg")
 
@@ -74,22 +74,22 @@ function init(){
        chartLayer
            .selectAll(".node rect")
            .transition()
-           .duration(1000)
+           .duration(250)
            .attr("x", function(d) { return d.x0 })
            .attr("y", function(d) { return d.y0  })
            .attr("width", function(d) { return d.x1 - d.x0 })
            .attr("height", function(d) { return d.y1 - d.y0})
-           .attr("fill", function(d) { while (d.depth > 1) d = d.parent; return color(d.data.id); })
+           .attr("fill", function(d) { while (d.depth > 1) d = d.parent; return color(d.data.wins / d.data.total); })
 
        chartLayer
            .selectAll(".node text")
            .transition()
            .delay(function(d,i){ return i * 100 })
-           .duration(1000)
+           .duration(250)
            .text(function(d){ return d.data.id })
            .attr("y", "1.5em")
            .attr("x", "0.5em")
-           .attr("font-size", "0.6em")
+           .attr("font-size", "1.2em")
            .attr("transform", function(d){ return "translate("+[d.x0, d.y0]+")" })
 
     }
