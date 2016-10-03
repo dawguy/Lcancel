@@ -66,6 +66,7 @@ Route::group(['middleware' => ['web']], function () {
 
     // Visualization Routes
     Route::get('matchup', 'MatchupController@index');
-    Route::get('matchup/playerOne/{playerOne}/playerTwo/{playerTwo}', 'MatchupController@playerRecordVsPlayer');
+    Route::get('matchup/playerTreemap/playerOne/{playerOne}/playerTwo/{playerTwo}', 'MatchupController@playerRecordTreemap');
+    Route::get('matchup/playerJson/playerOne/{playerOne}/playerTwo/{playerTwo}', 'MatchupController@playerRecordVsPlayer');
 
 });

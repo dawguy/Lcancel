@@ -49,6 +49,17 @@ class MatchupController extends Controller
     }
 
 	/**
+	* Show the player record tree matchup
+	*
+	* @return \Illuminate\Http\Response
+	*/
+	public function playerRecordTreemap($playerOne, $playerTwo){
+		$json = $this->playerRecordVsPlayer($playerOne, $playerTwo);
+		$data['playerMatchupJson'] = json_decode($json->getContent());
+		return view('playerMatchupTreemap', $data);
+	}
+
+	/**
 	* Gets matchup json for playerOne vs playerTwo
 	* @return json
 	*/
@@ -78,12 +89,13 @@ class MatchupController extends Controller
 
 			if(!isset($matchJson[$characterName])){
 				$matchJson[$characterName] = array();
-				$matchJson[$characterName]['key'] = $characterName;
-				$matchJson[$characterName]['value'] = $match['total'];
+				$matchJson[$characterName]['id'] = $characterName;
+				$matchJson[$characterName]['total'] = $match['total'];
 				$matchJson[$characterName]['wins'] = $match['total'];
+				$matchJson[$characterName]['parent'] = 'characters';
 				$matchJson[$characterName]['losses'] = 0;
 			} else {
-				$matchJson[$characterName]['value'] += $match['total'];
+				$matchJson[$characterName]['total'] += $match['total'];
 				$matchJson[$characterName]['wins'] += $match['total'];
 			}
 		}
@@ -93,18 +105,25 @@ class MatchupController extends Controller
 
 			if(!isset($matchJson[$characterName])){
 				$matchJson[$characterName] = array();
-				$matchJson[$characterName]['key'] = $characterName;
-				$matchJson[$characterName]['value'] = $match['total'];
+				$matchJson[$characterName]['id'] = $characterName;
+				$matchJson[$characterName]['total'] = $match['total'];
 				$matchJson[$characterName]['wins'] = 0;
+				$matchJson[$characterName]['parent'] = 'characters';
 				$matchJson[$characterName]['losses'] = $match['total'];
 			} else {
-				$matchJson[$characterName]['value'] += $match['total'];
+				$matchJson[$characterName]['total'] += $match['total'];
 				$matchJson[$characterName]['losses'] += $match['total'];
 			}
 		}
 
+		$matchJson = array_values($matchJson);
+		$return_json = array();
+		$return_json['id'] = "characters";
+		$return_json['parent'] = null;
+		$return_json['children'] = $matchJson;
+
 		return response()
-			->json(array_values($matchJson));
+			->json($return_json);
 	}
 
 }
