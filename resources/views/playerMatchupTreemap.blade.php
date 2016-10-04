@@ -6,9 +6,14 @@
 @endpush
 <div class="container">
     <div class="row">
-        <div class="graph">
+        <div id="playerMatchup" style="display: block; max-width: 200; max-height: 200;">
         </div>
     </div>
+</div>
+<div id="playerMatchupTooltip" style="display: none; position: absolute; width: 90px; height: 60px; background-color: gray;">
+	<div id="playerMatchupCharacter"></div>
+	<div id="playerMatchupWins">Wins:</div>
+	<div id="playerMatchupLosses">Losses:</div>
 </div>
 <script type="text/javascript">
     var playerOne = {!! json_encode($playerOne) !!};
