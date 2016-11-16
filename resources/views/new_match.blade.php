@@ -65,46 +65,95 @@ ul.ui-autocomplete {
     margin: 0px;
 }
 
+.player, .ui-menu-item {
+	border-style: solid;
+	border-width: 2px;
+	margin: 2px;
+	background: #9494b8;
+}
+
+.playerStats {
+
+}
+
+.playerNav {
+
+}
+
+.playerContainer {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background: #BBBBBB;
+}
+
 </style>
 @push('scripts')
 	<script type="text/javascript" src="{{URL::asset('js/NewMatch.js')}}"></script>
 @endpush
 
 <div class="container">
-    <div class="row">
-    	<h1>Select Player</h1>
-		<div class="col-lg-4">
-			<div class="">
-				<h2>Friend</h2>
-			</div>
-			<div class="">
-				@foreach($friends as $friend)
-				<div data-playerid="{{ $friend['id'] }}" class="player">{{ $friend['name'] }}</div>
-				@endforeach
-			</div>
-		</div>
-		<div class="col-sm-4">
-			<div class="">
-				<h2>Recent</h2>
-			</div>
-			<div class="">
-				@foreach($recents as $recent)
-				<div data-playerid="{{ $recent['id'] }}" class="player">{{ $recent['name'] }}</div>
-				@endforeach
-			</div>
-		</div>
-   		<div class="col-sm-4">
-			<div class="">
-				<h2>Search</h2>
-			</div>
-			<div id="player_search_container" class="">
-				<input id="player_search" type="text"/>
-				@foreach($searches as $searched)
-				<div data-playerid="{{ $searched['id'] }}" class="player">{{ $searched['name'] }}</div>
-				@endforeach
+	<div class="row">
+		<div class="col-lg-5">
+			<div class="playerContainer">
+				<div class="playerNav">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="#">Stats</a>
+						</li>
+						<li>
+							<a href="#">Vs Player</a>
+						</li>
+						<li>
+							<a href="#">Vs Character</a>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<label for="player1Name">Player 1</label>
+					<input id="player1Name" type="text"></input>
+				</div>
+				<div id="player1Stats" class="playerStats">
+					Wins: <br/>
+					Losses: <br/>
+					Elo: <br/>
+					Character: <br/>
+				</div>
 			</div>
 		</div>
-    </div>
+		<div class="col-lg-2">
+    	   	<div class="row playerMiddle">
+    	   		<h3>vs</h3>
+			</div>
+    	</div>
+		<div class="col-lg-5">
+			<div class="playerContainer playerRight">
+				<div class="playerNav">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="#">Stats</a>
+						</li>
+						<li>
+							<a href="#">Vs Player</a>
+						</li>
+						<li>
+							<a href="#">Vs Character</a>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<label for="player2Name">Player 2</label>
+					<input id="player2Name" type="text"></input>
+				</div>
+				<div id="player2Stats" class="playerStats">
+					Wins: <br/>
+					Losses: <br/>
+					Elo: <br/>
+					Character: <br/>
+				</div>
+			</div>
+		</div>
+	</div>
 
     <div class="row">
     	<h1>Match Outcome</h1>
@@ -115,17 +164,16 @@ ul.ui-autocomplete {
 	    			<h3 id="player1Id" data-user="{{$userId}}">{{ Auth::user()->name }}</h3>
 				</div>
 				<div class="row">
-					Character:
-					<img id="player1Character" class="player1Character" data-character="{{$player1Character}}"src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Selected Character" height="40" width="40">
-					@include('character_select', array('playerNumber' => 1))
+					Character: @include('character_select', array('playerNumber' => 1))
 				</div>
 				<div class="row">
-					Stocks:
-					<img id="player1_0Lives" style="p1s0 opacity: .1" class="player1StockNone" src="{{URL::asset('/image/none.png')}}" alt="No Lives" height="40" width="40">
-					<img id="player1_1Lives" class="player1Stock p1s1 p1s2 p1s3 p1s4" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
-					<img id="player1_2Lives" class="player1Stock p1s2 p1s3 p1s4" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
-					<img id="player1_3Lives" class="player1Stock p1s3 p1s4" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
-					<img id="player1_4Lives" class="player1Stock p1s4" src="{{URL::asset('/image/stocks/' . $main_character . '.png')}}" alt="Stock" height="40" width="40">
+					Stocks Remaining: <select class="selectpicker" id="player1Stocks">
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+					</select>
 				</div>
 			</div>
     	</div>
@@ -140,17 +188,16 @@ ul.ui-autocomplete {
 	    			<h3 id="opponent">Select Opponent</h3>
 				</div>
 				<div class="row">
-					Character:
-					<img id="player2Character" class="player2Character" src="{{URL::asset('/image/stocks/question.png')}}" alt="Selected Character" height="40" width="40">
-					@include('character_select', array('playerNumber' => 2))
+					Character: @include('character_select', array('playerNumber' => 1))
 				</div>
 				<div class="row">
-					Stocks:
-					<img id="player2_0Lives" style="opacity: .1" class="player2StockNone" src="{{URL::asset('/image/none.png')}}" alt="No Lives" height="40" width="40">
-					<img id="player2_1Lives" class="player2Stock p2s1 p2s2 p2s3 p2s4" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
-					<img id="player2_2Lives" class="player2Stock p2s2 p2s3 p2s4" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
-					<img id="player2_3Lives" class="player2Stock p2s3 p2s4" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
-					<img id="player2_4Lives" class="player2Stock p2s4" src="{{URL::asset('/image/stocks/question.png')}}" alt="Stock" height="40" width="40">
+					Stocks Remaining: <select class="selectpicker" id="player2Stocks">
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+					</select>
 				</div>
 			</div>
     	</div>
