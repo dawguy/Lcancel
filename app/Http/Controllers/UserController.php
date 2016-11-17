@@ -35,9 +35,7 @@ class UserController extends Controller
 
         foreach($users as $user)
         {
-            if(Auth::user()->id !== $user['id']){
-                $results[] = ['id' => $user['id'], 'value' => $user['name']];
-            }
+            $results[] = ['id' => $user['id'], 'value' => $user['name']];
         }
         return $results;
     }

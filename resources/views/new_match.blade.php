@@ -109,7 +109,7 @@ ul.ui-autocomplete {
 						</li>
 					</ul>
 				</div>
-				<div>
+				<div class="ui-widget">
 					<label for="player1Name">Player 1</label>
 					<input id="player1Name" type="text"></input>
 				</div>
@@ -141,7 +141,7 @@ ul.ui-autocomplete {
 						</li>
 					</ul>
 				</div>
-				<div>
+				<div class="ui-widget">
 					<label for="player2Name">Player 2</label>
 					<input id="player2Name" type="text"></input>
 				</div>
@@ -161,7 +161,7 @@ ul.ui-autocomplete {
     	<div class="col-lg-5">
     		<div class="playerLeft">
 	    		<div class="row">
-	    			<h3 id="player1Id" data-user="{{$userId}}">{{ Auth::user()->name }}</h3>
+	    			<h3 id="player1Id">Player 1</h3>
 				</div>
 				<div class="row">
 					Character: @include('character_select', array('playerNumber' => 1))
@@ -185,10 +185,10 @@ ul.ui-autocomplete {
     	<div class="col-lg-5">
     		<div class="playerRight">
 	    		<div class="row">
-	    			<h3 id="opponent">Select Opponent</h3>
+	    			<h3 id="player2Id">Player2</h3>
 				</div>
 				<div class="row">
-					Character: @include('character_select', array('playerNumber' => 1))
+					Character: @include('character_select', array('playerNumber' => 2))
 				</div>
 				<div class="row">
 					Stocks Remaining: <select class="selectpicker" id="player2Stocks">
