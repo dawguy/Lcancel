@@ -44,7 +44,7 @@ function playerNameChosen(playerNumber,playerInfo){
 		$('#player' + playerNumber + 'Id').text(playerInfo.value);
 
 		//Determines the main character for a player
-		var url = 'users/mainCharacter/' + playerInfo.playerId;
+		var url = 'users/mainCharacter/' + playerInfo.id;
 		$.get(url)
 		.done( function(data, text_status){
 				if(playerNumber == 1){
@@ -56,7 +56,6 @@ function playerNameChosen(playerNumber,playerInfo){
 				if(playerNumber == 2){
 						player2.primaryCharacterId = data.id;
 						player2.primaryCharacterName = data.value;
-						console.log(data);
 						player2.character = $('#player2CharacterSelect').val(data.id).change();
 				}
 		});

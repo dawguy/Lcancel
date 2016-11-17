@@ -74,8 +74,6 @@ class MatchController extends Controller
         $winner = null;
         $loser = null;
 
-        $player1['playerId'] = Auth::user()->id;
-
         if($player1['stocks'] >= $player2['stocks']){
             $winner = $player1;
             $loser = $player2;

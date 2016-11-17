@@ -57,6 +57,8 @@ class UserController extends Controller
         $mostUsedCharacter = 27;
         $mostUsedCharacterName = 'question';
 
+        Log::infO($characters);
+
         foreach($characters as $character){
             $count = $character->total;
             if($count > $maxUsed){
