@@ -1,6 +1,8 @@
 var player1 = {};
 var player2 = {};
 var stage = 'Battlefield';
+var player1Matches = {};
+var player2Matches = {};
 
 $(document).ready(function(){
 	//From stackoverflow. Updates autocomplete's element sizes to not span entire screen
@@ -44,21 +46,47 @@ function playerNameChosen(playerNumber,playerInfo){
 		$('#player' + playerNumber + 'Id').text(playerInfo.value);
 
 		//Determines the main character for a player
-		var url = 'users/mainCharacter/' + playerInfo.id;
+		var url = 'users/playerInfo/' + playerInfo.id;
 		$.get(url)
 		.done( function(data, text_status){
 				if(playerNumber == 1){
-						player1.primaryCharacterId = data.id;
-						player1.primaryCharacterName = data.value;
-						player1.character = $('#player1CharacterSelect').val(data.id).change();
+					  var characterInfo = data.character;
+						player1.primaryCharacterId = characterInfo.id;
+						player1.primaryCharacterName = characterInfo.name;
+						player1.character = $('#player1CharacterSelect').val(characterInfo.id).change();
+						var playerStats = data.matches;
+						player1Matches = playerStats;
+						$('#player1StatsWins').text(playerStats.won.length);
+						$('#player1StatsLosses').text(playerStats.lost.length);
+						$('#player1StatsElo').text(1000);
 				}
 
 				if(playerNumber == 2){
-						player2.primaryCharacterId = data.id;
-						player2.primaryCharacterName = data.value;
-						player2.character = $('#player2CharacterSelect').val(data.id).change();
+					var characterInfo = data.character;
+					player2.primaryCharacterId = characterInfo.id;
+					player2.primaryCharacterName = characterInfo.name;
+					player2.character = $('#player2CharacterSelect').val(characterInfo.id).change();
+					var playerStats = data.matches;
+					player2Matches = playerStats;
+					$('#player2StatsWins').text(playerStats.won.length);
+					$('#player2StatsLosses').text(playerStats.lost.length);
+					$('#player2StatsElo').text(1000);
 				}
 		});
+}
+
+function updateStats(winningPlayerNumber){
+	if(winningPlayerNumber === 1){
+		var newWins = parseInt($('#player1StatsWins').text(), 10) + 1;
+		var newLosses = parseInt($('#player2StatsLosses').text(), 10) + 1;
+		$('#player1StatsWins').text(newWins);
+		$('#player2StatsLosses').text(newLosses);
+	} else {
+		var newWins = parseInt($('#player2StatsWins').text(), 10) + 1;
+		var newLosses = parseInt($('#player1StatsLosses').text(), 10) + 1;
+		$('#player2StatsWins').text(newWins);
+		$('#player1StatsLosses').text(newLosses);
+	}
 }
 
 function setupClickHandlers(){
@@ -100,6 +128,11 @@ function setupClickHandlers(){
 			alert('Match added!');
 			$('#player1Stocks').val(0).change();
 			$('#player2Stocks').val(0).change();
+			if(player1.stocks < player2.stocks){
+				updateStats(2);
+			} else {
+				updateStats(1);
+			}
 		});
 	});
 }

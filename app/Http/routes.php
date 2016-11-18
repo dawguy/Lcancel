@@ -54,6 +54,7 @@ Route::group(['middleware' => ['web']], function () {
 	// User Routes
 	Route::get('users/search', 'UserController@autocomplete');
 	Route::get('users/mainCharacter/{playerId}', 'UserController@mainCharacter');
+  Route::get('users/playerInfo/{playerId}', 'UserController@playerInfo');
 
 	// Friends Routes
     Route::get('friends', 'FriendController@index');

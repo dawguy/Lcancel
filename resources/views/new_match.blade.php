@@ -2,21 +2,6 @@
 
 @section('content')
 <style>
-.player, .ui-menu-item {
-	border-style: solid;
-	border-width: 2px;
-	margin: 2px;
-	background: #9494b8;
-}
-
-.player:hover{
-	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
-}
-
-.selected {
-	background: #8585e0;
-}
-
 .playerLeft {
 	margin: auto;
 }
@@ -29,55 +14,22 @@
 	margin: auto;
 }
 
-.player1Stock{
-	background: lightgray;
-	border-radius: 6px;
-}
-
-.player2Stock{
-	background: lightgray;
-	border-radius: 6px;
-}
-
-.p1s4:hover .p1s4{
-	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
-}
-
-.player2Stock:hover{
-	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
-}
-
-.player1Character:hover{
-	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
-}
-
-.player2Character:hover{
-	box-shadow: 0 0 4px rgba(216, 145, 145, 1);
-}
 
 .ui-helper-hidden-accessible {
 	display:none;
 }
 
-ul.ui-autocomplete {
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
-}
-
-.player, .ui-menu-item {
+.ui-menu-item {
 	border-style: solid;
 	border-width: 2px;
 	margin: 2px;
 	background: #9494b8;
 }
 
-.playerStats {
-
-}
-
-.playerNav {
-
+ul.ui-autocomplete {
+		list-style: none;
+    padding: 0px;
+    margin: 0px;
 }
 
 .playerContainer {
@@ -86,7 +38,6 @@ ul.ui-autocomplete {
 	height: 100%;
 	background: #BBBBBB;
 }
-
 </style>
 @push('scripts')
 	<script type="text/javascript" src="{{URL::asset('js/NewMatch.js')}}"></script>
@@ -114,10 +65,9 @@ ul.ui-autocomplete {
 					<input id="player1Name" type="text"></input>
 				</div>
 				<div id="player1Stats" class="playerStats">
-					Wins: <br/>
-					Losses: <br/>
-					Elo: <br/>
-					Character: <br/>
+					Wins: <span id="player1StatsWins"></span><br>
+					Losses: <span id="player1StatsLosses"></span><br>
+					Elo: <span id="player1StatsElo"></span><br>
 				</div>
 			</div>
 		</div>
@@ -146,10 +96,9 @@ ul.ui-autocomplete {
 					<input id="player2Name" type="text"></input>
 				</div>
 				<div id="player2Stats" class="playerStats">
-					Wins: <br/>
-					Losses: <br/>
-					Elo: <br/>
-					Character: <br/>
+					Wins: <span id="player2StatsWins"></span><br/>
+					Losses: <span id="player2StatsLosses"></span><br>
+					Elo: <span id="player2StatsElo"></span><br>
 				</div>
 			</div>
 		</div>

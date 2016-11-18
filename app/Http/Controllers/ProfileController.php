@@ -31,31 +31,29 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($playerId){
-        $data = array();
-        $player = User::find($playerId);
-        $data['player'] = $player;
+			$currentUser = Auth::user()->id;
 
-        $won = Matches::userWonMatches($playerId);
-        $lost = Matches::userLostMatches($playerId);
+			if($currentUser !== $playerId)
+			{
+				$areFriends = PlayerFriends::areFriends($currentUser, $playerId);
 
-		$currentUser = Auth::user()->id;
-
-		if($currentUser !== $playerId)
-		{
-			$areFriends = PlayerFriends::areFriends($currentUser, $playerId);
-
-			if(count($areFriends) > 0){
-				$data['areFriends'] = true;
-			} else {
-				$data['areFriends'] = false;
+				if(count($areFriends) > 0){
+					$data['areFriends'] = true;
+				} else {
+					$data['areFriends'] = false;
+				}
 			}
-		}
 
-        $data['won'] = count($won);
-        $data['lost'] = count($lost);
-        $data['mainCharacter'] = UserController::mainCharacter($playerId);
+			$matches = Matches::userMatches($playerId);
+			$data['won'] = count($matches['won']);
+      $data['lost'] = count($matches['lost']);
 
-        return view('profile', $data);
+			$player = User::find($playerId);
+			$data['player'] = $player;
+
+      $data['mainCharacter'] = UserController::mainCharacter($playerId);
+
+      return view('profile', $data);
     }
 
 	/**

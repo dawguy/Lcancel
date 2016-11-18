@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Models\User;
+use App\Models\Matches;
 use Auth;
 use Log;
 use DB;
@@ -57,7 +58,7 @@ class UserController extends Controller
         $mostUsedCharacter = 27;
         $mostUsedCharacterName = 'question';
 
-        Log::infO($characters);
+        Log::info($characters);
 
         foreach($characters as $character){
             $count = $character->total;
@@ -69,5 +70,20 @@ class UserController extends Controller
         }
 
         return array('id' => $mostUsedCharacter, 'name' => $mostUsedCharacterName);
-    }
+      }
+
+      /**
+      * Gets the stats and character of a player
+      * @return player info
+      */
+      public static function playerInfo($playerId)
+      {
+        $data = array();
+        $characterInfo = UserController::mainCharacter($playerId);
+        $data['character'] = $characterInfo;
+        $matches = Matches::userMatches($playerId);
+        $data['matches'] = $matches;
+        return $data;
+      }
+
 }

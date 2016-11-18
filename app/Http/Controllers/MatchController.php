@@ -83,6 +83,7 @@ class MatchController extends Controller
             $winner = $player2;
         }
 
+				//I should add a addedBy playerId column to this table
         $match = new Matches;
         $match->winner = $winner['playerId'];
         $match->loser = $loser['playerId'];

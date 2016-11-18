@@ -19,26 +19,16 @@ class Matches extends Model  {
     */
     public function scopeUserMatches($query, $playerId)
     {
-    	// Get loser name too
-        $wonMatches = Matches::where('winner', '=', $playerId)
-        ->join('users', 'users.id', '=', 'matches.loser')
-        ->get();
-        // Get winner name too
-        $lostMatches = Matches::where('loser', '=', $playerId)
-        ->join('users', 'users.id', '=', 'matches.winner')
-        ->get();
+			$data = array();
+			$player = User::find($playerId);
 
-        $matches = array();
+			$won = Matches::userWonMatches($playerId);
+			$lost = Matches::userLostMatches($playerId);
 
-        foreach($wonMatches as $match){
-            $matches[] = $match;
-        }
+			$data['won'] = $won;
+			$data['lost'] = $lost;
 
-        foreach($lostMatches as $match){
-            $matches[] = $match;
-        }
-
-        return $matches;
+      return $data;
     }
 
 	/**
