@@ -14,7 +14,6 @@
 	margin: auto;
 }
 
-
 .ui-helper-hidden-accessible {
 	display:none;
 }
@@ -37,6 +36,10 @@ ul.ui-autocomplete {
 	width: 100%;
 	height: 100%;
 	background: #BBBBBB;
+}
+
+.playerNav li.active{
+	background: #AAFFFF;
 }
 </style>
 @push('scripts')

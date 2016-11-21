@@ -70,4 +70,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('matchup/playerTreemap/playerOne/{playerOne}/playerTwo/{playerTwo}', 'MatchupController@playerRecordTreemap');
     Route::get('matchup/playerJson/playerOne/{playerOne}/playerTwo/{playerTwo}', 'MatchupController@playerRecordVsPlayer');
 
+    //Data Routes
+    Route::get('statistics/playerOne/{playerOne}/opponentCharacter/{opponentCharacter}', 'StatisticsController@playerVsCharacter');
+    Route::get('statistics/eloVsTime/playerOne/{playerOne}', 'StatisticsController@playerEloVsTime');
+    Route::get('statistics/characterOne/{characterOne}/characterTwo/{characterTwo}', 'StatisticsController@characterVsCharacter');
+    Route::get('statistics/playerOne/{playerOne}/playerTwo/{playerTwo}', 'StatisticsController@playerVsPlayer');
+    Route::get('statistics/playerOne/{playerOne}/playerTwo/{playerTwo}/playerOneCharacter/{playerOneCharacter}', 'StatisticsController@playerAsCharacterVsPlayer');
+
 });
