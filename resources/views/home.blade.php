@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
@@ -10,7 +10,7 @@
                 <div class="panel-body">
                     <ul>
                         <li>
-                            <a href="/match">Matches</a>
+                            <a href="/matches">Matches</a>
                         </li>
                         <li>
                             <a href="/friends">Friends</a>

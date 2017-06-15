@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\UserController;
-use App\Models\Matches;
-use Auth;
-use App\Models\User;
+use App\Matches;
+use App\User;
 use Illuminate\Http\Request;
 use Log;
+use DB;
 
 class MatchController extends Controller
 {
@@ -19,19 +17,28 @@ class MatchController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     /**
-     * Show the application dashboard.
+     * Matches that have recently been played.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $data = array();
-
-        return view('new_match', $data);
+		$matches = Matches::latest()->with('winner')->with('loser')->simplePaginate(50);
+		Log::info($matches);
+        return view('matches.index', compact('matches'));
     }
+
+	/**
+	* Shows the match input screen.
+	* @return \Illuminate\Http\Response
+	*/
+	public function newMatchIndex(){
+		$data = array();
+        return view('new_match', $data);
+	}
+
 
     /**
     * Creates a new match.

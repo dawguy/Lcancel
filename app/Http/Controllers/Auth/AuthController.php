@@ -12,7 +12,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Repositories\UserRepository;
 
-use App\Models\User;
+use App\User;
 
 use Validator;
 
@@ -70,5 +70,5 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-    
+
 }

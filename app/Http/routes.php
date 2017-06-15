@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'WelcomeController@Index');
+Route::get('/', 'HomeController@Index');
+Route::get('/matches', 'MatchController@index');
 
 
 /*
@@ -26,9 +27,6 @@ Route::get('/', 'WelcomeController@Index');
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/', 'HomeController@index');
-    Route::get('/home', 'HomeController@index');
-
 	// Authentication Routes
 	Route::get('login', 'Auth\AuthController@getLogin');
 	Route::post('login', 'Auth\AuthController@login');
@@ -44,7 +42,6 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('password/reset', 'Auth\PasswordController@reset');
 
 	// Match Routes
-    Route::get('match', 'MatchController@index');
 	Route::put('match', 'MatchController@putMatch');
 
 	// History Routes

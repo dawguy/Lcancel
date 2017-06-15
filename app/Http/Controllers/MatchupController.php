@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Matches;
-use App\Models\Characters;
+use App\Matches;
+use App\Characters;
 use Auth;
-use App\Models\User;
+use App\User;
 use Illuminate\Http\Request;
 use Log;
 use DB;

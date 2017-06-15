@@ -1,4 +1,4 @@
-<?php namespace App\Models;
+<?php namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Log;
@@ -11,6 +11,22 @@ class Matches extends Model  {
 	 * @var string
 	 */
 	protected $table = 'matches';
+
+	/**
+	 * Get the winner assocaited with the Matches
+	 */
+	public function winner()
+	{
+		return $this->belongsTo('App\User', 'winner', 'id');
+	}
+
+	/**
+	 * Get the winner assocaited with the Matches
+	 */
+	public function loser()
+	{
+		return $this->belongsTo('App\User', 'loser', 'id');
+	}
 
 	/**
     * Gets a list of matches that a user was part of.
