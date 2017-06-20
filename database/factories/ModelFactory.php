@@ -22,8 +22,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Matches::class, function (Faker\Generator $faker) {
     return [
-        'winner_character' => rand(0,26),
-        'loser_character' => rand(0,26),
+        'winner_character' => rand(1,27),
+        'loser_character' => rand(1,27),
         'winner_stocks' => rand(1,4),
         'loser_stocks' => 0,
         'winner' => App\User::all()->random()->id,

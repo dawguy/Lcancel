@@ -25,7 +25,7 @@ class MatchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-		$matches = Matches::latest()->with('winner')->with('loser')->simplePaginate(50);
+		$matches = Matches::orderBy('id','desc')->with('winner')->with('loser')->with('winner_character')->with('loser_character')->simplePaginate(50);
 		Log::info($matches);
         return view('matches.index', compact('matches'));
     }

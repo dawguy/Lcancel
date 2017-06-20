@@ -21,11 +21,27 @@ class Matches extends Model  {
 	}
 
 	/**
-	 * Get the winner assocaited with the Matches
+	 * Get the losing character assocaited with the match
+	 */
+	public function winner_character()
+	{
+		return $this->belongsTo('App\Character', 'winner_character', 'id');
+	}
+
+	/**
+	 * Get the loser assocaited with the match
 	 */
 	public function loser()
 	{
 		return $this->belongsTo('App\User', 'loser', 'id');
+	}
+
+	/**
+	 * Get the losing character assocaited with the match
+	 */
+	public function loser_character()
+	{
+		return $this->belongsTo('App\Character', 'loser_character', 'id');
 	}
 
 	/**

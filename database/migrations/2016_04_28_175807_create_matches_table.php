@@ -18,6 +18,8 @@ class CreateMatchesTable extends Migration
             $table->integer('loser_character')->references('id')->on('characters');
             $table->integer('winner_stocks');
             $table->integer('loser_stocks');
+            $table->integer('winner')->references('id')->on('users');
+            $table->integer('loser')->references('id')->on('users');
             $table->string('stage');
             $table->timestamps();
         });
