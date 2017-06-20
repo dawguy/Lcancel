@@ -156,6 +156,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+	/*
+	 * Tinker Service Providers...
+ 	 */
+	Laravel\Tinker\TinkerServiceProvider::class,
+
     ],
 
     /*
