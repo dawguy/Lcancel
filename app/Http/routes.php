@@ -11,9 +11,17 @@
 |
 */
 
+// Default Home Route
 Route::get('/', 'HomeController@Index');
+
+// Match Routes
 Route::get('/matches', 'MatchController@index');
+Route::get('/matches/report_match', 'MatchController@report');
 Route::get('/matches/{match}', 'MatchController@match');
+
+// User Routes
+Route::get('/users/search', 'UserController@autocomplete');
+Route::get('users/favorite_character/{playerId}', 'UserController@favorite_character');
 
 
 /*
@@ -50,9 +58,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('history/{playerId}', 'HistoryController@index');
 
 	// User Routes
-	Route::get('users/search', 'UserController@autocomplete');
 	Route::get('users/mainCharacter/{playerId}', 'UserController@mainCharacter');
-  Route::get('users/playerInfo/{playerId}', 'UserController@playerInfo');
 
 	// Friends Routes
     Route::get('friends', 'FriendController@index');

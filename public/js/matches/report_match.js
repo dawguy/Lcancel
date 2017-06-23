@@ -22,7 +22,7 @@ function submit(){
 
 function setupSearchHandlers(){
 	$('#player1Name').autocomplete({
-		source : 'users/search',
+		source : '/users/search',
 		select : function(event, ui){
 			$('#player1Name').val(ui.item.value);
 			player1.playerName = ui.item.value;
@@ -32,7 +32,7 @@ function setupSearchHandlers(){
 	});
 
 		$('#player2Name').autocomplete({
-    	source : 'users/search',
+    	source : '/users/search',
     	select : function(event, ui){
     		$('#player2Name').val(ui.item.value);
 				player2.playerName = ui.item.value;
@@ -46,7 +46,7 @@ function playerNameChosen(playerNumber,playerInfo){
 		$('#player' + playerNumber + 'Id').text(playerInfo.value);
 
 		//Determines the main character for a player
-		var url = 'users/playerInfo/' + playerInfo.id;
+		var url = '/users/favorite_character/' + playerInfo.id;
 		$.get(url)
 		.done( function(data, text_status){
 				if(playerNumber == 1){

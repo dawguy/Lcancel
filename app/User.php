@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Support\Facades\Response;
 use Auth;
 use Log;
 use DB;
@@ -25,6 +26,21 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /*
+        Gets a players favorite character based on whichever character he/she has won the most matches as
+    */
+    public static function favorite_character($player){
+        $favorite_character = DB::table('matches')
+        ->select('winner', 'winner_character', DB::raw('count(*) AS wins_count') )
+        ->where('winner', '=', $player)
+        ->groupBy('winner')
+        ->groupBy('winner_character')
+        ->orderBy('wins_count', 'desc')
+        ->first();
+
+        return Response::json($favorite_character);
+    }
 
     public function scopeSearchable($query, $value){
         $players = DB::table('users')

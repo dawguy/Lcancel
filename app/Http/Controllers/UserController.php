@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Models\User;
-use App\Models\Matches;
+use App\User;
+use App\Matches;
 use Auth;
-use Log;
 use DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
@@ -20,7 +19,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -41,49 +40,14 @@ class UserController extends Controller
         return $results;
     }
 
-    /**
-    * Gets the main character for a player
-    *
-    * @return character.id
-    */
-    public static function mainCharacter($playerId)
-    {
-        $characters = DB::table('matches')
-        ->select(DB::raw('COUNT(characters.id) as total'), 'characters.id', 'characters.name')
-        ->join('characters', 'characters.id', '=', 'matches.winner_character')
-        ->groupBy('characters.id')
-        ->where('matches.winner', '=', $playerId)->get();
-
-        $maxUsed = -1;
-        $mostUsedCharacter = 27;
-        $mostUsedCharacterName = 'question';
-
-        Log::info($characters);
-
-        foreach($characters as $character){
-            $count = $character->total;
-            if($count > $maxUsed){
-                $mostUsedCharacter = $character->id;
-                $mostUsedCharacterName = $character->name;
-                $maxUsed = $count;
-            }
-        }
-
-        return array('id' => $mostUsedCharacter, 'name' => $mostUsedCharacterName);
-      }
-
-      /**
+     /**
       * Gets the stats and character of a player
       * @return player info
       */
-      public static function playerInfo($playerId)
+      public static function favorite_character($playerId)
       {
-        $data = array();
-        $characterInfo = UserController::mainCharacter($playerId);
-        $data['character'] = $characterInfo;
-        $matches = Matches::userMatches($playerId);
-        $data['matches'] = $matches;
-        return $data;
+          $character_info = User::favorite_character($playerId);
+          return $character_info;
       }
 
 }

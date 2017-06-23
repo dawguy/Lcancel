@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <style>
@@ -43,7 +43,7 @@ ul.ui-autocomplete {
 }
 </style>
 @push('scripts')
-	<script type="text/javascript" src="{{URL::asset('js/NewMatch.js')}}"></script>
+	<script type="text/javascript" src="{{URL::asset('js/matches/report_match.js')}}"></script>
 @endpush
 
 <div class="container">

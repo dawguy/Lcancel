@@ -13,10 +13,7 @@
                             <a href="/matches">Matches</a>
                         </li>
                         <li>
-                            <a href="/friends">Friends</a>
-                        </li>
-                        <li>
-                            <a href="/history">History</a>
+                            <a href="/matches/report_match">Report Match</a>
                         </li>
                     </ul>
                 </div>

@@ -26,21 +26,19 @@ class MatchController extends Controller
      */
     public function index(){
 		$matches = Matches::orderBy('id','desc')->with('winner')->with('loser')->with('winner_character')->with('loser_character')->simplePaginate(50);
+		Log::info($matches);
         return view('matches.index', compact('matches'));
-    }
-
-    public function match( $match ){
-        $match = Matches::where('id', $match)->with('winner')->with('loser')->with('winner_character')->with('loser_character')->first();
-        return view( 'matches.match', compact( 'match') );
     }
 
 	/**
 	* Shows the match input screen.
 	* @return \Illuminate\Http\Response
 	*/
-	public function report(){
-        return view('matches.report_match');
+	public function newMatchIndex(){
+		$data = array();
+        return view('new_match', $data);
 	}
+
 
     /**
     * Creates a new match.
