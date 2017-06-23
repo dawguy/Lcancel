@@ -30,6 +30,11 @@ class MatchController extends Controller
         return view('matches.index', compact('matches'));
     }
 
+    public function match( $match ){
+        $match = Matches::where('id', $match)->with('winner')->with('loser')->with('winner_character')->with('loser_character')->first();
+        return view( 'matches.match', compact( 'match') );
+    }
+
 	/**
 	* Shows the match input screen.
 	* @return \Illuminate\Http\Response

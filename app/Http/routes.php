@@ -13,6 +13,7 @@
 
 Route::get('/', 'HomeController@Index');
 Route::get('/matches', 'MatchController@index');
+Route::get('/matches/{match}', 'MatchController@match');
 
 
 /*
