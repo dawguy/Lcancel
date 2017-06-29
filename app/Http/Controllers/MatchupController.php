@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Matches;
+use App\Repositories\DbCharacterMatchupRepository;
 use App\Characters;
 use Auth;
 use App\User;
@@ -13,14 +14,15 @@ use DB;
 
 class MatchupController extends Controller
 {
+	protected $character_matchup;
 	 /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(DbCharacterMatchupRepository $character_matchup)
     {
-        $this->middleware('auth');
+		$this->character_matchup = $character_matchup;
     }
 
     /**
@@ -47,6 +49,17 @@ class MatchupController extends Controller
 
         return view('matchup', $data);
     }
+
+	/**
+	* Show the character's profile and statistics
+	*
+	* @return \Illuminate\Http\Response
+	*/
+	public function character($character){
+		$data = $this->character_matchup->getAll($character);
+
+		return view('matchups.character', $data);
+	}
 
 	/**
 	* Show the player record tree matchup

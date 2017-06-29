@@ -21,8 +21,11 @@ Route::get('/matches/{match}', 'MatchController@match');
 
 // User Routes
 Route::get('/users/search', 'UserController@autocomplete');
-Route::get('users/favorite_character/{playerId}', 'UserController@favorite_character');
+Route::get('/users/favorite_character/{playerId}', 'UserController@favorite_character');
 
+// Character Matchup Routes
+Route::get('/matchups/character/{character}', 'MatchupController@character');
+Route::get('/matchups/winner_character/{winner_character}/loser_character/{loser_character}');
 
 /*
 |--------------------------------------------------------------------------
