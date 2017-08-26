@@ -30,6 +30,54 @@ class DbCharacterMatchupRepository {
         return $matches;
     }
 
+    public function getAllByCharacterMatchup($first_character, $second_character){
+        $matches = Matches::select('id', 'winner_character', 'loser_character', 'winner_stocks', 'loser_stocks', 'stage' )
+                                    ->where( function ($query) use ($first_character, $second_character) {
+                                        $query->where( 'winner_character', '=', $first_character)
+                                              ->where( 'loser_character', '=', $second_character);
+                                    })
+                                    ->orWhere( function ($query) use ($first_character, $second_character) {
+                                        $query->where( 'winner_character', '=', $second_character)
+                                              ->where( 'loser_character', '=', $first_character);
+                                    })
+                                    ->with( 'winner_character' )
+                                    ->with( 'loser_character' )
+                                    ->get();
+        return $matches;
+    }
+
+    public function getAllByPlayerMatchup($first_player, $second_player){
+        $matches = Matches::select('id', 'winner_character', 'loser_character', 'winner_stocks', 'loser_stocks', 'winner', 'loser', 'stage' )
+                                    ->where( function ($query) use ($first_player, $second_player) {
+                                        $query->where( 'winner', '=', $first_player)
+                                              ->where( 'loser', '=', $second_player);
+                                    })
+                                    ->orWhere( function ($query) use ($first_player, $second_player) {
+                                        $query->where( 'winner', '=', $second_player)
+                                              ->where( 'loser', '=', $first_player);
+                                    })
+                                    ->with( 'winner_character' )
+                                    ->with( 'loser_character' )
+                                    ->with( 'winner' )
+                                    ->with( 'loser' )
+                                    ->get();
+        return $matches;
+    }
+
+    public function getCountsByCharacterMatchup($winner_character, $loser_character){
+        $winner_matches = DB::table('matches')
+                    ->where( 'winner_character', '=', $winner_character )
+                    ->where( 'loser_character', '=', $loser_character )
+                    ->count();
+
+        $loser_matches = DB::table('matches')
+                    ->where( 'winner_character', '=', $winner_character )
+                    ->where( 'loser_character', '=', $loser_character )
+                    ->count();
+
+        return $matches;
+    }
+
     private function group_matches_by_character( $matches ){
         $grouped_matches = [];
 

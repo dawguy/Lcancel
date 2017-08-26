@@ -25,7 +25,10 @@ Route::get('/users/favorite_character/{playerId}', 'UserController@favorite_char
 
 // Character Matchup Routes
 Route::get('/matchups/character/{character}', 'MatchupController@character');
-Route::get('/matchups/winner_character/{winner_character}/loser_character/{loser_character}');
+Route::get('/matchups/characters/{first_character}/{second_character}', 'MatchupController@character_matchup');
+Route::get('/matchups/players/{first_player}/{second_player}', 'MatchupController@player_matchup');
+Route::get('/matchups/players/{first_player}/{second_player}/characters/{first_character}/{second_character}', 'MatchupController@player_matchup_with_selected_character');
+
 
 /*
 |--------------------------------------------------------------------------

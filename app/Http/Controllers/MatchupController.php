@@ -62,6 +62,47 @@ class MatchupController extends Controller
 	}
 
 	/**
+	* Show the character vs character stats
+	*
+	* @return \Illuminate\Http\Response
+	*/
+	public function character_matchup($first_character,$second_character)
+	{
+		$data = array();
+		$matches = $this->character_matchup->getAllByCharacterMatchup($first_character,$second_character);
+		$data['matches'] = $matches;
+		return view('matchups.character_matchup', $data);
+	}
+
+	/**
+	* Show the player vs player stats
+	*
+	* @return \Illuminate\Http\Response
+	*/
+	public function player_matchup($first_player,$second_player)
+	{
+		$data = array();
+		$matches = $this->character_matchup->getAllByPlayerMatchup($first_player,$second_player);
+		$data['matches'] = $matches;
+		return view('matchups.player_matchup', $data);
+	}
+
+	/**
+	* Show the player vs player stats with selected characters defaulted
+	*
+	* @return \Illuminate\Http\Response
+	*/
+	public function player_matchup_with_selected_character($first_player,$second_player,$first_character,$second_character)
+	{
+		$data = array();
+		$matches = $this->character_matchup->getAllByPlayerMatchup($first_player,$second_player);
+		$data['matches'] = $matches;
+		$data['first_player_character'] = $first_character;
+		$data['second_player_character'] = $second_character;
+		return view('matchups.player_matchup', $data);
+	}
+
+	/**
 	* Show the player record tree matchup
 	*
 	* @return \Illuminate\Http\Response
